@@ -1,9 +1,9 @@
 const { Router } = require('express')
+const UniversityController = require('./app/controllers/UniversityController')
 
 const routes = Router()
 
-routes.get('/home', (req, res) => {
-    res.send('ola mundo')
-})
+routes.get('/universities', UniversityController.index)
+
 
 module.exports = routes
