@@ -1,3 +1,4 @@
+const { response } = require('express');
 const University = require('../models/University')
 
 class UniversityController {
@@ -36,8 +37,30 @@ class UniversityController {
         }).skip(skip).limit(limit);
     }   
 
-    show () {
+    async show (req, res) {
+        try {
+            const university = await University.findById(req.params.id)
+            return res.status(200).json(university)
+        } catch (e) {
+            return res.status(400).json({"Error": "Invalid ID"})
+        }
+    }
 
+    async create (req, res) {
+        const { body } = req
+        const university = await University.find({
+            name: body.name,
+            country: body.country,
+            'state-province': body["state-province"] 
+        })
+        
+        if (Array.isArray(university) && !university.length) {
+            await University.create(body)
+            res.status(200).json({"msg": "Created"})
+
+        } else {
+            res.status(400).json({"error": "Data exists!"})
+        }
     }
 
     update () {
