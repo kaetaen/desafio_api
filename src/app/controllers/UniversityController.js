@@ -1,6 +1,12 @@
+const University = require('../models/University')
+
 class UniversityController {
-    index (req, res) {
-        return res.send({"status": "ok"})
+    constructor () {
+        this.university = University
+    }
+
+    async index (req, res) {
+        return this.university.find()
     }   
 
     show () {

@@ -21,7 +21,7 @@ const UniversitySchema = new conn.Schema({
 
     },
 
-    'state-provice': {
+    'state-province': {
         type: String,
         require: false
     },
