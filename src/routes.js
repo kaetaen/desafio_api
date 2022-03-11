@@ -6,6 +6,6 @@ const routes = Router()
 routes.get('/universities', UniversityController.index)
 routes.get('/universities/:id', UniversityController.show)
 routes.post('/universities', UniversityController.create)
-
+routes.put('/universities/:id', UniversityController.update)
 
 module.exports = routes

@@ -8,9 +8,9 @@ class UniversityController {
         const filter = countryName ? {country: countryName[0].toUpperCase() + countryName.slice(1)} : {}
 
         // Paginação
-        let page = req.query.page;
-        let limit = 20;
-        let skip = limit * (page - 1);
+        let page = req.query.page
+        let limit = 20
+        let skip = limit * (page - 1)
         const countUniversity =  await University.count(filter)
         const totalUniversityPerPage = Math.ceil(countUniversity / limit)
 
@@ -32,7 +32,7 @@ class UniversityController {
                     currentPage:page,
                     lastPage:totalUniversityPerPage,
                     dados: universities,
-                }); 
+                })
             }
         }).skip(skip).limit(limit);
     }   
@@ -59,15 +59,28 @@ class UniversityController {
             res.status(200).json({"msg": "Created"})
 
         } else {
-            res.status(400).json({"error": "Data exists!"})
+            res.status(400).json({"error": "Data already exists!"})
         }
     }
 
-    update () {
+   async update (req, res) {
 
+        try {
+            const { body } = req
+
+            const filter = { _id: req.params.id}
+            const update = body
+
+            const university = await University.findOneAndUpdate(filter, update)
+
+            res.status(200).json({msg: "Updated!"})
+
+        } catch (e) {
+            res.status(400).json({error: "Invalid ID"})
+        }
     }
 
-    destroy () {
+    async destroy () {
 
     }
 }
