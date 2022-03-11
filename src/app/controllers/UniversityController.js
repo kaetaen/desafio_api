@@ -80,7 +80,15 @@ class UniversityController {
         }
     }
 
-    async destroy () {
+    async destroy (req, res) {
+        try {
+            const filter = { _id: req.params.id}
+            const university = await University.findOneAndDelete(filter)
+            res.status(200).json({msg: "Deleted"})
+
+        } catch (e) {
+            res.status(400).json({error: "Invalid ID"})
+        }
 
     }
 }
